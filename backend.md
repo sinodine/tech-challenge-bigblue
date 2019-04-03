@@ -1,5 +1,3 @@
-# Backend Challenge
-
 # **Software Engineer Challenge (Backend)**
 
 ## **Introduction**
