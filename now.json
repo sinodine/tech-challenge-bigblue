@@ -1,4 +1,5 @@
 {
     "version": 2,
-    "builds": [{ "src": "*.go", "use": "@now/go" }]
+    "builds": [{ "src": "*.go", "use": "@now/go" }],
+    "alias": ["bigblue-challenge"]
 }
