@@ -1,2 +1,5 @@
-# tech-challenge
-https://bigblue.welcomekit.co/
+# Bigblue Tech Challenges
+
+Pick the challenge that matches your skillset:
+
+- [Backend](backend.md)
