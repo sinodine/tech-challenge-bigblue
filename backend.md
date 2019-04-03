@@ -27,7 +27,7 @@ At Bigblue, we are receiving e-commerce orders day and night. As a software engi
         - Reservations have a `status` field that is either `RESERVED` or `BACKORDER` (can also use `PENDING`) based on the success of their reservation process
     - One endpoint to set total inventory (count) for a product
     - One endpoint to list inventory counts for all products (see sample)
-3. Products should be validated: a list of existing products is available at this url: <TODO>
+3. Products should be validated: a list of existing products is available at this url: [bigblue-challenge.now.sh/products](https://bigblue-challenge.now.sh/products)
 4. The request input should be validated before processing. The server should return proper error response in case validation fails.
 5. A Database must be used (SQL or NoSQL, at Bigblue we use both). The DB installation & initialisation must be done in `start.sh`.
 6. All responses must be in json format no matter in success or failure situations.
