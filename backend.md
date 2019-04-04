@@ -2,13 +2,13 @@
 
 ## **Introduction**
 
-At Bigblue, we are receiving e-commerce orders day and night. As a software engineer, you have to provide a reliable backend that never loses track of anything. Your task here is to implement four endpoints to created and manage inventory reservations.
+At Bigblue, we are receiving e-commerce orders day and night. As a software engineer, you have to provide a reliable backend that never loses track of anything. Your task here is to implement four endpoints to create and manage inventory reservations.
 
 ## **Requirement**
 
 1. We value a **clean**, **simple** working solution.
 2. The application must be run in Docker, candidate must provide `docker-compose.yml` and `start.sh` bash script at the root of the project, which should setup all relevant services/applications.
-3. We prefer Golang, but the solution can also be written in one of the following language/platform: Java, Node.js.
+3. We prefer Golang, but the solution can also be written in one of the following languages/platforms: Java, Node.js, Ruby.
 4. Candidates must submit the project as a git repository (github.com, bitbucket.com, gitlab.com). Repository must avoid containing the words `bigblue` and `challenge`.
 5. Having unit/integration tests is a strong bonus.
 6. As we run automated tests on your project, you must comply to the API requirement as stipulated below. You can assume Docker is already installed in the test machine.
