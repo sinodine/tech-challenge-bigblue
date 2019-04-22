@@ -7,7 +7,7 @@ At Bigblue, we are processing e-commerce orders day and night. As a software eng
 ## **Requirements**
 
 1. We value a **clean**, **simple**, but still **visually pleasing** solution. You don’t have to be a designer but you must put some effort into making this look good.
-2. The application must include the build tooling (gulp, npm, webpack, etc) to bundle your files.
+2. The application must use React and include the build tooling (gulp, npm, webpack, etc) to bundle your files.
 3. We prefer Typescript, but the solution can also be written in Javascript.
 4. Candidates must submit the project as a git repository (github.com, bitbucket.com, gitlab.com). Repository must avoid containing the words `bigblue` and `challenge`.
 5. Having unit/end-to-end tests is a strong bonus.
