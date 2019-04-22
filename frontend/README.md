@@ -15,162 +15,52 @@ At Bigblue, we are processing e-commerce orders day and night. As a software eng
 
 ## **Problem Statement**
 
-1. Listen for events on localhost:8080
-2. The API must implement 4 endpoints with path, method, request and response body as specified
-    - One endpoint to create a reservation (see sample)
-        - To create a reservation, the API client must provide lines which are product + quantity pairs (see sample)
-        - The API responds an object containing the generated reservation ID (see sample)
-    - One endpoint to list reservations (see sample)
-        - Reservations have a `status` field that is either `RESERVED` or `BACKORDER` (can also use `PENDING`) based on the success of their reservation process
-    - One endpoint to set total inventory (count) for a product
-    - One endpoint to list inventory counts for all products (see sample)
-3. Products should be validated: a list of existing products is available at this url: <TODO>
-4. The request input should be validated before processing. The server should return proper error response in case validation fails.
-5. A Database must be used (SQL or NoSQL, at Bigblue we use both). The DB installation & initialisation must be done in `start.sh`.
-6. All responses must be in json format no matter in success or failure situations.
+1. Listen to events from the mock API at `localhost:8080/`. Refer to the [Event Schema](#event-schema) section.
+2. Display those real-time fulfillment events on a single page. Feel free to group and reduce them for your solution to bring the most value to the end-user.
+3. Your solution must handle network issues and auto-reconnect.
 
-## **Api Interface**
+## **Event Schema**
 
-You are expected to follow the API specification as follows. Your implementation should not have any deviations on the method, URI path, request and response body. Such alterations may cause our automated tests to fail.
+Events coming from the mock API have a generic top-level schema, and an underlying payload specific to its type. For simplicity's sake, this challenge will only deal with events of type `order_event`.
 
-### Create reservation
+```json
+{
+  "id": "1KEj2cQsQhEyQYUvMIcuEUCUBgV", // uuid
+  "create_time": "2019-04-22T22:04:04+02:00", // iso8601 create time
+  "organization": "BBCG", // owner organization
+  "type": "order_event",
+  "payload": <type-specific object>
+}
+```
 
--   Method: `POST`
--   URL path: `/reservations`
--   Request body:
+_Top-level event schema_
 
-        {
-          "lines": [
-            {
-              "product": <product_id>,
-              "quantity": <product_qty>
-            }
-          ]
-        }
+```json
+{
+    "reference": "BBCG6801MU96", // order id
+    "operator": "Bigblue System", // event triggerer
+    "subtype": "status_update",
+    "short": "CREATED",
+    "description": "Synced from e-shop"
+}
+```
 
--   Response:
+_`order_event` payload_
 
-    Header: `HTTP 201` Body:
+-   `subtype` can be `data_update` (order data changed) or `status_update` (order status changed)
+-   when `subtype` is `status_update`, `short` is the order's new `status` code, which can be:
+    -   `CREATED`
+    -   `TRANSMITTED`
+    -   `IN_PREPARATION`
+    -   `PREPARED`
+    -   `SHIPPED`
+    -   `DELIVERY_EXCEPTION`
+    -   `DELIVERED`
 
-        {
-          "id": <reservation_id>,
-          "created_at": <iso_8601_date>,
-          "lines": [
-            {
-              "product": <product_id>,
-              "quantity": <product_qty>
-            }
-          ],
-          "status": <status>
-        }
+## **Running the mock API**
 
-    or
+The mock API is available as a compiled binary you can run your preferred platform from the [Latest Release page](/../../releases/latest). You can also run the mock API from the source available in the [`api`](/api) directory by running the following command from the repo's root:
 
-    Header: `HTTP <HTTP_CODE>` Body:
-
-        {
-          "error": "ERROR_DESCRIPTION"
-        }
-
--   Tips:
-    -   Reservation id in response should be unique. It can be an auto-incremental integer or any kind of unique string id.
-    -   `created_at` date must be a ISO 8601 date string
-    -   Clients should still be able to create reservations when a product is out of stock
-    -   `status` can be set synchronously or asynchronously. If asynchronous, this endpoint first returns a `PENDING` status.
-    -   Inventory reservations must follow a first-come-first-served scheme.
-    -   Since a product can only be reserved once, you must be mindful of race condition.
-
-### L**ist reservations**
-
--   Method: `GET`
--   Url path: `/orders?cursor=:cursor&limit=:limit`
--   Response: Header: `HTTP 200` Body:
-
-        {
-          "reservations": [
-            {
-              "id": <reservation_id>,
-              "created_at": <iso_8601_date>,
-              "lines": [
-                  {
-                      "product": <product_id>,
-                      "quantity": <product_qty>
-                  }
-              ],
-              "status": <status>
-            },
-              ...
-          ],
-           "cursor": <cursor>
-        }
-
-    or
-
-    Header: `HTTP <HTTP_CODE>` Body:
-
-        {
-          "error": "ERROR_DESCRIPTION"
-        }
-
--   Tips:
-    -   If limit is not valid integer then you should return error response
-    -   The cursor is an optional way of iterating results by giving the next page's cursor in the response
-    -   If there is no result, then you should return an empty array json in response body, and and empty cursor
-
-### Set inventory quantity
-
--   Method: `POST`
--   Url path: `/inventory`
--   Request Body:
-
-        {
-          "product": <product_id>,
-          "quantity": <qty>
-        }
-
--   Response: Header: `HTTP 200` Body:
-
-        {
-          "product": <product_id>,
-          "quantity": <qty>
-        }
-
-    or
-
-    Header: `HTTP <HTTP_CODE>` Body:
-
-        {
-          "error": "ERROR_DESCRIPTION"
-        }
-
--   Tips:
-    -   The product must exist (see above)
-
-### List inventory
-
--   Method: `GET`
--   Url path: `/inventory?cursor=:cursor&limit=:limit`
--   Response: Header: `HTTP 200` Body:
-
-        {
-          "inventory": [
-              {
-                "product": <product_id>,
-                "quantity": <qty>,
-                "available": <available>
-              }
-              ...
-          ],
-          "cursor": <cursor>
-        }
-
-    or
-
-    Header: `HTTP <HTTP_CODE>` Body:
-
-        {
-          "error": "ERROR_DESCRIPTION"
-        }
-
--   Tips:
-    -   Available inventory means not reserved: `quantity = available + reserved`
+```sh
+$(cd frontend/api && go run api.go)
+```
