@@ -1,5 +1,5 @@
 {
     "version": 2,
-    "builds": [{ "src": "products/*.go", "use": "@now/go" }],
+    "builds": [{ "src": "backend/products/*.go", "use": "@now/go" }],
     "alias": ["bigblue-challenge"]
 }

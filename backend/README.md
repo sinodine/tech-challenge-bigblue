@@ -1,12 +1,10 @@
-# Backend Challenge
-
 # **Software Engineer Challenge (Backend)**
 
 ## **Introduction**
 
 At Bigblue, we are receiving e-commerce orders day and night. As a software engineer, you have to provide a reliable backend that never loses track of anything. Your task here is to implement four endpoints to created and manage inventory reservations.
 
-## **Requirement**
+## **Requirements**
 
 1. We value a **clean**, **simple** working solution.
 2. The application must be run in Docker, candidate must provide `docker-compose.yml` and `start.sh` bash script at the root of the project, which should setup all relevant services/applications.
@@ -38,142 +36,142 @@ You are expected to follow the API specification as follows. Your implementation
 
 ### Create reservation
 
-- Method: `POST`
-- URL path: `/reservations`
-- Request body:
+-   Method: `POST`
+-   URL path: `/reservations`
+-   Request body:
 
-      {
-        "lines": [
-          {
-            "product": <product_id>,
-            "quantity": <product_qty>
-          }
-        ]
-      }
+        {
+          "lines": [
+            {
+              "product": <product_id>,
+              "quantity": <product_qty>
+            }
+          ]
+        }
 
-- Response:
+-   Response:
 
     Header: `HTTP 201` Body:
 
-      {
-        "id": <reservation_id>,
-        "created_at": <iso_8601_date>,
-        "lines": [
-          {
-            "product": <product_id>,
-            "quantity": <product_qty>
-          }
-        ],
-        "status": <status>
-      }
+        {
+          "id": <reservation_id>,
+          "created_at": <iso_8601_date>,
+          "lines": [
+            {
+              "product": <product_id>,
+              "quantity": <product_qty>
+            }
+          ],
+          "status": <status>
+        }
 
     or
 
     Header: `HTTP <HTTP_CODE>` Body:
 
-      {
-        "error": "ERROR_DESCRIPTION"
-      }
+        {
+          "error": "ERROR_DESCRIPTION"
+        }
 
-- Tips:
-    - Reservation id in response should be unique. It can be an auto-incremental integer or any kind of unique string id.
-    - `created_at` date must be a ISO 8601 date string
-    - Clients should still be able to create reservations when a product is out of stock
-    - `status` can be set synchronously or asynchronously. If asynchronous, this endpoint first returns a `PENDING` status.
-    - Inventory reservations must follow a first-come-first-served scheme.
-    - Since a product can only be reserved once, you must be mindful of race condition.
+-   Tips:
+    -   Reservation id in response should be unique. It can be an auto-incremental integer or any kind of unique string id.
+    -   `created_at` date must be a ISO 8601 date string
+    -   Clients should still be able to create reservations when a product is out of stock
+    -   `status` can be set synchronously or asynchronously. If asynchronous, this endpoint first returns a `PENDING` status.
+    -   Inventory reservations must follow a first-come-first-served scheme.
+    -   Since a product can only be reserved once, you must be mindful of race condition.
 
 ### L**ist reservations**
 
-- Method: `GET`
-- Url path: `/orders?cursor=:cursor&limit=:limit`
-- Response: Header: `HTTP 200` Body:
+-   Method: `GET`
+-   Url path: `/orders?cursor=:cursor&limit=:limit`
+-   Response: Header: `HTTP 200` Body:
 
-      {
-        "reservations": [
-          {
-            "id": <reservation_id>,
-            "created_at": <iso_8601_date>,
-            "lines": [
-                {
-                    "product": <product_id>,
-                    "quantity": <product_qty>
-                }
-            ],
-            "status": <status>
-          },
-            ...
-        ],
-         "cursor": <cursor>
-      }
+        {
+          "reservations": [
+            {
+              "id": <reservation_id>,
+              "created_at": <iso_8601_date>,
+              "lines": [
+                  {
+                      "product": <product_id>,
+                      "quantity": <product_qty>
+                  }
+              ],
+              "status": <status>
+            },
+              ...
+          ],
+           "cursor": <cursor>
+        }
 
     or
 
     Header: `HTTP <HTTP_CODE>` Body:
 
-      {
-        "error": "ERROR_DESCRIPTION"
-      }
+        {
+          "error": "ERROR_DESCRIPTION"
+        }
 
-- Tips:
-    - If limit is not valid integer then you should return error response
-    - The cursor is an optional way of iterating results
-    - If there is no result, then you should return an empty array json in response body, and and empty cursor
+-   Tips:
+    -   If limit is not valid integer then you should return error response
+    -   The cursor is an optional way of iterating results by giving the next page's cursor in the response
+    -   If there is no result, then you should return an empty array json in response body, and and empty cursor
 
 ### Set inventory quantity
 
-- Method: `POST`
-- Url path: `/inventory`
-- Request Body:
+-   Method: `POST`
+-   Url path: `/inventory`
+-   Request Body:
 
-      {
-        "product": <product_id>,
-        "quantity": <qty>
-      }
+        {
+          "product": <product_id>,
+          "quantity": <qty>
+        }
 
-- Response: Header: `HTTP 200` Body:
+-   Response: Header: `HTTP 200` Body:
 
-      {
-        "product": <product_id>,
-        "quantity": <qty>
-      }
+        {
+          "product": <product_id>,
+          "quantity": <qty>
+        }
 
     or
 
     Header: `HTTP <HTTP_CODE>` Body:
 
-      {
-        "error": "ERROR_DESCRIPTION"
-      }
+        {
+          "error": "ERROR_DESCRIPTION"
+        }
 
-- Tips:
-    - The product must exist (see above)
+-   Tips:
+    -   The product must exist (see above)
 
 ### List inventory
 
-- Method: `GET`
-- Url path: `/inventory?cursor=:cursor&limit=:limit`
-- Response: Header: `HTTP 200` Body:
+-   Method: `GET`
+-   Url path: `/inventory?cursor=:cursor&limit=:limit`
+-   Response: Header: `HTTP 200` Body:
 
-      {
-        "inventory": [
-            {
-              "product": <product_id>,
-              "quantity": <qty>,
-              "available": <available>
-            }
-            ...
-        ],
-        "cursor": <cursor>
-      }
+        {
+          "inventory": [
+              {
+                "product": <product_id>,
+                "quantity": <qty>,
+                "available": <available>
+              }
+              ...
+          ],
+          "cursor": <cursor>
+        }
 
     or
 
     Header: `HTTP <HTTP_CODE>` Body:
 
-      {
-        "error": "ERROR_DESCRIPTION"
-      }
+        {
+          "error": "ERROR_DESCRIPTION"
+        }
 
-- Tips:
-    - Available inventory means not reserved: `quantity = available + reserved`
+-   Tips:
+    -   Available inventory means not reserved: `quantity = available + reserved`

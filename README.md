@@ -2,4 +2,5 @@
 
 Pick the challenge that matches your skillset:
 
-- [Backend](backend.md)
+-   [Backend](/backend)
+-   [Frontend](/frontend)
