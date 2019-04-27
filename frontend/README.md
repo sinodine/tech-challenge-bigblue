@@ -21,7 +21,7 @@ At Bigblue, we are processing e-commerce orders day and night. As a software eng
 
 ## **Event Schema**
 
-Events coming from the mock API have a generic top-level schema, and an underlying payload specific to its type. For simplicity's sake, this challenge will only deal with events of type `order_event`.
+Events coming from the mock API's [server-sent events](https://en.wikipedia.org/wiki/Server-sent_events) endpoint have a generic top-level schema, and an underlying payload specific to its type. For simplicity's sake, this challenge will only deal with events of type `order_event`.
 
 ```json
 {
