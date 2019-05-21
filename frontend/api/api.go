@@ -10,6 +10,7 @@ import (
 
 	"github.com/icrowley/fake"
 	"github.com/julienschmidt/sse"
+	"github.com/rs/cors"
 	"github.com/segmentio/ksuid"
 )
 
@@ -46,7 +47,7 @@ func main() {
 		g.Start("BBCG")
 	}()
 
-	if err := http.ListenAndServe(":8080", s); err != nil {
+	if err := http.ListenAndServe(":8080", cors.Default().Handler(s)); err != nil {
 		panic(err)
 	}
 }
