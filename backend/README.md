@@ -16,6 +16,8 @@ At Bigblue, we are receiving e-commerce orders day and night. As a software engi
 
 ## **Problem Statement**
 
+As customers order goods on our brands' e-commerce stores, we have to make sure that inventory is correctly reserved to ensure they don't sell more products than what they have in stock. An "inventory reservation" corresponds to one or several order lines (product + quantity) and a status: `RESERVED` or `BACKORDER` depending on whether the reservation was succesful. Last, inventory reservations must follow a first-come-first-served scheme.
+
 1. Must be a RESTful HTTP API listening to port `8080` (or you can use another port instead and describe in the README)
 2. The API must implement 4 endpoints with path, method, request and response body as specified
     - One endpoint to create a reservation (see sample)
@@ -25,7 +27,7 @@ At Bigblue, we are receiving e-commerce orders day and night. As a software engi
         - Reservations have a `status` field that is either `RESERVED` or `BACKORDER` (can also use `PENDING`) based on the success of their reservation process
     - One endpoint to set total inventory (count) for a product
     - One endpoint to list inventory counts for all products (see sample)
-3. Products should be validated: a list of existing products is available at this url: [bigblue-challenge.now.sh/products](https://bigblue-challenge.now.sh/products)
+3. Products should be validated: a list of existing products is available at this url: [https://bigblue-challenge.now.sh/backend/products](https://bigblue-challenge.now.sh/backend/products)
 4. The request input should be validated before processing. The server should return proper error response in case validation fails.
 5. A Database must be used (SQL or NoSQL, at Bigblue we use both). The DB installation & initialisation must be done in `start.sh`.
 6. All responses must be in json format no matter in success or failure situations.
@@ -81,7 +83,7 @@ You are expected to follow the API specification as follows. Your implementation
     -   Inventory reservations must follow a first-come-first-served scheme.
     -   Since a product can only be reserved once, you must be mindful of race condition.
 
-### L**ist reservations**
+### **List reservations**
 
 -   Method: `GET`
 -   Url path: `/orders?cursor=:cursor&limit=:limit`
