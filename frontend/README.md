@@ -49,7 +49,6 @@ _`order_event` payload:_
 `subtype` can be `data_update` (order data changed) or `status_update` (order status changed).
 
 When `subtype` is `status_update`, `description` is a short text describing the update (`Synced from e-shop`, `Transmitted to the warehouse`, `Preparation has started`, ...) and `short` is the order's new `status` code, which can be:
-
 -   `CREATED`
 -   `TRANSMITTED`
 -   `IN_PREPARATION`
