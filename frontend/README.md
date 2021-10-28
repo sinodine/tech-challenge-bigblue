@@ -9,7 +9,7 @@ At Bigblue, we are processing e-commerce orders day and night. As a software eng
 1. We value a **clean**, **simple**, but still **visually pleasing** solution. You don’t have to be a designer but you must put some effort into making this look good.
 2. The application must use React and include the build tooling (gulp, npm, webpack, etc) to bundle your files.
 3. We prefer Typescript, but the solution can also be written in Javascript.
-4. Candidates must submit the project as a git repository (github.com, bitbucket.com, gitlab.com). Repository must avoid containing the words `bigblue` and `challenge`.
+4. Candidates must submit the project as a private git repository (github.com, bitbucket.com, gitlab.com) or a zip file.
 5. Support for modern browsers only is enough.
 
 ## **Problem Statement**
@@ -38,24 +38,25 @@ _`order_event` payload:_
 
 ```json
 {
-    "reference": "BBCG6801MU96", // order id
-    "operator": "Bigblue System", // event triggerer
-    "subtype": "status_update",
-    "short": "CREATED",
-    "description": "Synced from e-shop"
+  "reference": "BBCG6801MU96", // order id
+  "operator": "Bigblue System", // event triggerer
+  "subtype": "status_update",
+  "short": "CREATED",
+  "description": "Synced from e-shop"
 }
 ```
 
 `subtype` can be `data_update` (order data changed) or `status_update` (order status changed).
 
 When `subtype` is `status_update`, `description` is a short text describing the update (`Synced from e-shop`, `Transmitted to the warehouse`, `Preparation has started`, ...) and `short` is the order's new `status` code, which can be:
--   `CREATED`
--   `TRANSMITTED`
--   `IN_PREPARATION`
--   `PREPARED`
--   `SHIPPED`
--   `DELIVERY_EXCEPTION`
--   `DELIVERED`
+
+- `CREATED`
+- `TRANSMITTED`
+- `IN_PREPARATION`
+- `PREPARED`
+- `SHIPPED`
+- `DELIVERY_EXCEPTION`
+- `DELIVERED`
 
 When `subtype` is `data_update`, `description` is the updated data (new destination address or new phone number) and `short` is the type of data updated (`destination` or `address`).
 

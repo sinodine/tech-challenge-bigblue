@@ -5,7 +5,7 @@
 1. We value a **clean**, **simple** working solution.
 2. The application must be runnable by starting a `start.sh` bash script at the root of the project, which should setup all relevant services and start.
 3. You can choose whatever technology you'd like as long as you're able to justify it.
-4. Candidates must submit the project as a git repository (github.com, bitbucket.com, gitlab.com). Repository must avoid containing the words `bigblue`, `storage` and `challenge`.
+4. Candidates must submit the project as a private git repository (github.com, bitbucket.com, gitlab.com) or a zip file.
 5. Having unit/integration tests is a strong bonus.
 6. As we run automated tests on your project, you must comply to the API requirement as stipulated below. You can assume Docker is already installed in the test machine.
 
@@ -17,8 +17,8 @@ We (Bigblue) have released a new storage pricing for our customers. As part of o
 
 When merchants store goods inside a Bigblue location, they're charged a daily per-item fee that depends on two parameters:
 
--   Product size: larger items are more expensive to store
--   Product age: storage is free during the 15 first days after a product arrives at the Bigblue location (as part of an "inbound shipment"), then price evolves with the time it's been sitting in the warehouse for.
+- Product size: larger items are more expensive to store
+- Product age: storage is free during the 15 first days after a product arrives at the Bigblue location (as part of an "inbound shipment"), then price evolves with the time it's been sitting in the warehouse for.
 
 Product age is computed per-item, so even if two products that are exactly similar are stored, they each are billed independently based on their "age" inside a Bigblue warehouse. The age of a product is computed using the date at which the inbound shipment that brought this product to the warehouse was offloaded. If it was offloaded on December 12th at 14:33, December 12th is day #0, 13th is day #1, etc.
 
