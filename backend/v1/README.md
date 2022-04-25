@@ -5,7 +5,7 @@
 In logistics, inaccurate addresses are the primary reason why orders do not arrive on time
 ([Magento, 2018](https://magento.com/sites/default/files8/fixing-failed-deliveries-community-insight.pdf)).
 
-At Bigblue, our mission is to create the ultimate delivery experience for brands. We sync e-commerce orders from our merchants' stores in real time, and have to ensure that their addresses are valid to ensure a frictionless experience.
+At Bigblue, our mission is to create the ultimate delivery experience for brands. We sync e-commerce orders from our merchants' stores in real-time, and have to ensure that their addresses are valid to ensure a frictionless experience.
 
 **Your challenge is to design and implement address validation for orders shipped to France.**
 
@@ -21,7 +21,7 @@ The current codebase sets up a simple [gRPC](https://grpc.io/) API written in Go
 
 - a `product` service that exposes a fixed list of products
 - an `order` service to be implemented to manage orders
-- a `generate.sh` script to be executed in order to generate client/server code based on the proto files.
+- a `generate.sh` script to be executed to generate client/server code based on the proto files.
 - a store used to mock persistent storage for orders and products. Read/write operations must only be done through the transactor interfaces.
   > ⚠️ The store code must not be edited.
 - a `server.go` entrypoint to initialize services and launch the API.
@@ -46,18 +46,16 @@ The current codebase sets up a simple [gRPC](https://grpc.io/) API written in Go
 
 ## Your missions
 
-You will improve the gRPC `order` API to allow order management, as well as add an address validation system to validate orders destination before creating or updating them.
+You will improve the gRPC `order` API to allow order management, as well as add an address validation system to validate order destinations before creating or updating them.
 
 ### I - Order service
 
-The current system exposes a product service that provides a fixed list of products through an RPC.
+The goal here is to improve the order service to create orders based on existing products:
 
-The goal here is to improve the order service in order to create orders based on the products:
-
-1. Complete the proto of the `product` service to implement a RPC to retrieve a single product by its ID.
+1. The current system exposes a product service that provides a fixed list of all existing products through an RPC. Complete the proto of the `product` service to implement a RPC that retrieves a single product by its ID.
 2. Complete the proto of the `order` service and implement a RPC to create a new order. Order must have the following fields:
-   - customer firstname
-   - customer lastname
+   - customer first name
+   - customer last name
    - line items (products & quantities)
    - shipping address (destination)
      - address line (45 Rue des Petites Ecuries)
@@ -65,22 +63,29 @@ The goal here is to improve the order service in order to create orders based on
      - city (Paris)
      - country (FR)
 
+Keep in mind that a third party could fail providing valid data to create an order. It is your responsibility to ensure that the integrity of the data in the store, notably regarding the address (see part II).
+
 ### II - Address validation
 
-As discussed previously, you should propose and implement a solution to validate the shipping address of an order before creating it:
+As explained in part I, the order contains a shipping address. This address is crucial to have the package delivered to the right place.
+Unfortunately, buyers may have put errors in their addresses. Still, Bigblue should be able to deduce the correct address by comparing the address with errors to existing valid addresses.
 
-- If the address contains some slight errors and the correct data can be identified with certainty by the system, the address will be automatically fixed and the order is created. Some examples:
+You should propose and implement the solution that validates the shipping address of an order before creating it:
+
+- If the address contains some slight errors and the correct data can be identified with certainty by the system, the address will be automatically fixed, and the order is created. Some examples:
 
   - 45 Rue des Pet**is** Ecuries → 45 Rue des Pet**ites** Ecuries
   - 1 Square Emile Z**i**la → 1 Square Emile Z**o**la
   - Par**i** → Par**is**
   - Aubervi**l**iers → Aubervi**ll**iers
 
-- Otherwise, if some parts of the address cannot be recognised and the system fails to validate it, the order is not created and a response with an error code is returned.
+  *Make sure you played with the above examples to identify the best solutions. Besides, The system will be restricted to the validation of French addresses.*
 
-The system will be restricted to the validation of French addresses.
+- Otherwise, if some parts of the address cannot be recognized and the system fails to validate it, the order is not created and a response with an error code is returned.
 
-For this task, we provide an API that allows to search for addresses in France:
-[https://bigblue-challenge.vercel.app/api/backend/v1/addresse](https://bigblue-challenge.vercel.app/api/backend/v1/addresse) ([doc](./doc/address_api.pdf))
+For this task, we provide an API that allows searching for addresses in France:
+[https://bigblue-challenge.vercel.app/api/backend/v1/addresse](https://bigblue-challenge.vercel.app/api/backend/v1/addresse) ([doc](./doc/address_api.pdf)). If the API doesn't return any results when called, the address is invalid and the order is not created. If the API returns 1 to N `Feature`s, your implementation should handle it and offer the best matching address.
+
+Be ready to stand up for your choices so that we can have an interesting discussion during the test debrief.
 
 _Good luck 🚀_
