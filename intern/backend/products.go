@@ -64,7 +64,6 @@ var products = []*Product{
 
 // Handler replies with the products response to any request
 func Handler(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	//// TODO
@@ -86,7 +85,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
 	fmt.Println("Starting server at port 8080. URL: http://localhost:8080/")
 
 	//// TODO
