@@ -1,43 +1,51 @@
 import * as React from "react";
 import "./index.css";
 
+import { ProductCard } from "../ProductCard/ProductCard";
+import { render } from "react-dom";
+
+// function renderProducts(props) {
+//   let renderedProducts = <></>;
+//   for (let i = 0; i < props.availableProducts.length; i++) {
+//     renderedProducts += <ProductCard
+//       key={props.availableProducts[i].id}
+//       product={props.availableProducts[i]}
+//       inCartProducts={props.inCartProducts}
+//       onAddToCart={props.onAddToCart}
+//       onRmToCart={props.onRmToCart}
+//     />;
+//   }
+
+//   return renderedProducts;
+// }
+
 const Shop = (props) => {
+
+  // let listProducts = <></>;
+
+  // listProducts = renderProducts(props);
+
+  var listCategories = [];
+  for (let i = 0; i < props.availableProducts.length; i++) {
+    if (!listCategories.includes(props.availableProducts[i].category)) {
+      listCategories.push(props.availableProducts[i].category);
+    }
+  };
+
   return (
-    <div className="card m-4 w-50 pb-4">
-      <h1 className="card-header">Shop</h1>
-      <div className="d-flex justify-content-between flex-wrap">
-        {props.products.map((product) => (
-          <div className="col-md-4 mt-4" key={product.id}>
-            <div className="card">
-              <div className="card-img-container">
-                <img
-                  className="card-img-top h-100 w-100"
-                  src={product.image_url}
-                  alt={product.name}
-                />
-              </div>
-              <div className="card-body">
-                <span className="card-title">
-                  <div className="d-flex justify-content-between">
-                    <span>{product.name}</span>
-                    <span>{product.price}$</span>
-                  </div>
-                </span>
-                <div className="d-flex flex-column align-items-end mt-2">
-                  <button
-                    onClick={() => props.onAddToCart(product.id)}
-                    className="btn btn-primary"
-                  >
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    <div className="container-shop">
+      {/* <div className="container-category">Category:
+        <select name="custom-select" id="category">
+          <option value="all">All</option>
+          {listCategories.map((category) => (
+            <option value={category}>{category}</option>
+          ))}
+        </select>
+      </div> */}
+      <ul className="container-products">
+        {props.listProducts}
+      </ul>
+    </div>);
 };
 
 export { Shop };

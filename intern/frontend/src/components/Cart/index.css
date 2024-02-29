@@ -1,17 +1,23 @@
 .red-btn {
-    color: #f0644b;
+    background-color: var(--tertiary-color);
+}
+
+.btn-item {
     border-width: 0px;
     border-radius: 100%;
     font-weight: bold;
+    color: var(--light-color);
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .green-btn {
-    color: #17c554;
-    border-width: 0px;
-    border-radius: 100%;
-    font-weight: bold;
-    /* color: white; */
-    /* Add this line to change the text color to white */
+    background-color: var(--secondary-color);
 }
 
 .table td,
@@ -24,9 +30,14 @@
 
 .line {
     /* display: flex; */
+    flex-direction: row;
+    align-items: center;
     gap: 20px;
+    /* min-width: 100px; */
+    justify-content: space-between;
 }
 
 td {
     vertical-align: middle;
+    justify-content: space-between;
 }

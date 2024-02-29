@@ -1,14 +1,63 @@
-.card-img-container {
-    padding-top: 125%;
-    width: 100%;
-    position: relative;
+.container-shop {
+    display: flex;
+    height: 575px;
+    padding: 0px 48px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex-shrink: 0;
+    align-self: stretch;
+    padding: 20px 40px;
 }
 
-.card-img-container img {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+.container-category {
+    display: flex;
+    padding: 29px 9px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* Add a subtle hover effect */
+select:hover {
+    border-color: #aaa;
+}
+
+/* Add a subtle focus effect */
+select:focus {
+    border-color: #46A5FC;
+    /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); */
+}
+
+.container-products {
+    display: flex;
+    /* height: 100vh; */
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    gap: 8px;
+    /* Ajout de l'espacement vertical */
+    columns: 5 auto;
 }

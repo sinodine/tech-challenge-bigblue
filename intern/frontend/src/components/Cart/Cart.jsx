@@ -16,23 +16,26 @@ const Cart = (props) => {
         </thead>
         <tbody>
           {props.products.map((product) => (
-            props.inCartProducts[product.id] > 0 &&
+            // props.inCartProducts[product.id] > 0 &&
             <tr key={product.id}>
               <td>{product.name}</td>
               <td className="line">
-                <button
-                  onClick={() => props.onRmToCart(product.id)}
-                  className="btn btn-tertiary red-btn"
-                >
-                  -
-                </button>
-                {props.inCartProducts[product.id]}
-                <button
-                  onClick={() => props.onAddToCart(product.id)}
-                  className="btn btn-tertiary green-btn"
-                >
-                  +
-                </button>
+                <>
+                  <button
+                    onClick={() => props.onRmToCart(product.id)}
+                    className="btn btn-item btn-tertiary red-btn"
+                  >
+                    -
+                  </button>
+                  <span style={{ minWidth: "60px" }}>
+                    {props.inCartProducts[product.id]}</span>
+                  <button
+                    onClick={() => props.onAddToCart(product.id)}
+                    className="btn btn-item btn-tertiary green-btn"
+                  >
+                    +
+                  </button>
+                </>
               </td>
               <td>{props.availableProducts[product.id]}</td>
               <td>{product.price}$</td>
@@ -40,11 +43,12 @@ const Cart = (props) => {
           ))}
         </tbody>
       </table>
-      <span className="mx-auto">Total:
-        {props.products.map((product) => (
-          props.inCartProducts[product.id] * product.price)).reduce((a, b) => (a + b), 0
-          )}$ </span>
-    </div>
+      <span className="mx-auto">Total: {" "}
+        {props.products
+          .map((p) => props.inCartProducts[p.id] * p.price)
+          .reduce((a, b) => a + b, 0)}$
+      </span>
+    </div >
   );
 };
 

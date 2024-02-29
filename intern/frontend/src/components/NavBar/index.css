@@ -1,14 +1,67 @@
-.card-img-container {
-    padding-top: 125%;
-    width: 100%;
-    position: relative;
+.NavBar {
+    margin-top: 10px;
+    display: flex;
+    padding: 24px 90px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    vertical-align: middle;
+    border-bottom: 7px solid var(--primary-color);
 }
 
-.card-img-container img {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+.link:hover {
+    color: var(--primary-color);
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 8px;
+    border-width: 0px;
+    background-color: #FFF;
+    vertical-align: middle;
+}
+
+.link-active {
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 8px;
+    border-width: 0px;
+    background-color: #FFF;
+    vertical-align: middle;
+}
+
+p {
+    /* color: #000; */
+    text-align: center;
+    vertical-align: middle;
+    /* font-family: Roboto; */
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    /* 88.462% */
+    letter-spacing: 0.5px;
+}
+
+.link active {
+    color: var(--primary-color);
+}
+
+.nbItems {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background: var(--tertiary-color);
+    display: flex;
+    padding: 4px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: #FFF;
+    font-weight: bold;
 }

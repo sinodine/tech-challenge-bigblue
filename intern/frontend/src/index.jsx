@@ -2,6 +2,12 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Cart } from "./components/Cart/Cart";
 import { Shop } from "./components/Shop/Shop";
+import { NavBar } from "./components/NavBar/NavBar";
+import { SearchBar } from "./components/SearchBar/SearchBar";
+import { ProductCard } from "./components/ProductCard/ProductCard";
+
+
+import "./main.css";
 
 const App = () => {
   const [products, setProducts] = React.useState([]);
@@ -22,29 +28,7 @@ const App = () => {
   // product.stock = availableProducts[product.id] + inCartProducts[product.id]
   const [inCartProducts, setInCartProducts] = React.useState({});
 
-  // Fetch products from the backend
-  // and store them in the products state.
-  React.useEffect(() => {
-    fetch("http://localhost:8080/products")
-      .then((response) => response.json())
-      .then((products) => {
-        setProducts(products.products);
-
-        // Initialize availableProducts and cartProducts
-        const initialAvailableProducts = products.products.reduce(
-          (acc, curr) => {
-            return { ...acc, [curr.id]: curr.stock };
-          },
-          {}
-        );
-        const initialInCartProducts = products.products.reduce((acc, curr) => {
-          return { ...acc, [curr.id]: 0 };
-        }, {});
-
-        setAvailableProducts(initialAvailableProducts);
-        setInCartProducts(initialInCartProducts);
-      });
-  }, []);
+  const [listProducts, setListProducts] = React.useState(<></>);
 
   // Add a product to cart.
   // Updating corresponding quantities in availableProducts and inCartProducts
@@ -80,23 +64,79 @@ const App = () => {
     }
   }; // Should show an error message if the product is not in the cart.
 
+  function renderProducts(props) {
+    let renderedProducts = [];
+    for (let i = 0; i < props.availableProducts.length; i++) {
+      renderedProducts.push(<ProductCard
+        key={props.availableProducts[i].id}
+        product={props.availableProducts[i]}
+        inCartProducts={props.inCartProducts}
+        onAddToCart={props.onAddToCart}
+        onRmToCart={props.onRmToCart}
+      />);
+    }
+
+    return renderedProducts;
+  }
+
+  // Fetch products from the backend
+  // and store them in the products state.
+  React.useEffect(() => {
+    fetch("http://localhost:8080/products")
+      .then((response) => response.json())
+      .then((products) => {
+        setProducts(products.products);
+
+        // Initialize availableProducts and cartProducts
+        const initialAvailableProducts = products.products.reduce(
+          (acc, curr) => {
+            return { ...acc, [curr.id]: curr.stock };
+          },
+          {}
+        );
+        const initialInCartProducts = products.products.reduce((acc, curr) => {
+          return { ...acc, [curr.id]: 0 };
+        }, {});
+
+        setAvailableProducts(initialAvailableProducts);
+        setInCartProducts(initialInCartProducts);
+        setListProducts(renderProducts({ availableProducts: products.products, inCartProducts: initialInCartProducts, onAddToCart: onAddToCart, onRmToCart: onRmToCart }));
+      });
+  }, []);
+
+
   // What is displayed.
   // Display the Shop component and the Cart component.
+
+  const [page, setPage] = React.useState("Shop");
+
+  // setListProducts(renderProducts({ availableProducts: products, inCartProducts: inCartProducts, onAddToCart: onAddToCart, onRmToCart: onRmToCart }));
+
   return (
-    <div className="d-flex justify-content-between">
-      <Shop
-        products={products}
-        availableProducts={availableProducts}
-        onAddToCart={onAddToCart}
-        onRmToCart={onRmToCart}
-      />
-      <Cart
-        products={products}
+    <div className="mainComponent">
+      < NavBar
+        active={page}
+        setPage={setPage}
         inCartProducts={inCartProducts}
-        availableProducts={availableProducts}
-        onAddToCart={onAddToCart}
-        onRmToCart={onRmToCart}
       />
+      {page === "Shop" && (
+        <Shop
+          products={products}
+          availableProducts={availableProducts}
+          onAddToCart={onAddToCart}
+          onRmToCart={onRmToCart}
+          listProducts={listProducts}
+        />
+      )}
+      {page === "Cart" && (
+        <Cart
+          products={products}
+          inCartProducts={inCartProducts}
+          availableProducts={availableProducts}
+          onAddToCart={onAddToCart}
+          onRmToCart={onRmToCart}
+        />
+      )}
     </div>
   );
 };
