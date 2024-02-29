@@ -86,3 +86,5 @@ Have fun :rocket: :wink:
 - add categories for products
 - add a button to display the shopping cart (new page)
 - search bar
+
+RQ: bug in the addToCart buttons. NaN displayed in the cart. Maybe from index.jsx
