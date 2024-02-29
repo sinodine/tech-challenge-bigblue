@@ -50,16 +50,35 @@ const App = () => {
   // Updating corresponding quantities in availableProducts and inCartProducts
   const onAddToCart = (productId) => {
     const availableBeforeAdd = availableProducts[productId];
-    setAvailableProducts({
-      ...availableProducts,
-      [productId]: availableBeforeAdd - 1,
-    });
-    const inCartBeforeAdd = inCartProducts[productId];
-    setInCartProducts({
-      ...inCartProducts,
-      [productId]: inCartBeforeAdd + 1,
-    });
-  };
+    if (availableBeforeAdd !== 0) {
+      setAvailableProducts({
+        ...availableProducts,
+        [productId]: availableBeforeAdd - 1,
+      });
+      const inCartBeforeAdd = inCartProducts[productId];
+      setInCartProducts({
+        ...inCartProducts,
+        [productId]: inCartBeforeAdd + 1,
+      });
+    }
+  }; // Should show an error message if the product is not available.
+
+  // Remove a product from the cart.
+  // Updating corresponding quantities in availableProducts and inCartProducts
+  const onRmToCart = (productId) => {
+    const availableBeforeAdd = availableProducts[productId];
+    if (inCartProducts[productId] !== 0) {
+      setAvailableProducts({
+        ...availableProducts,
+        [productId]: availableBeforeAdd + 1,
+      });
+      const inCartBeforeAdd = inCartProducts[productId];
+      setInCartProducts({
+        ...inCartProducts,
+        [productId]: inCartBeforeAdd - 1,
+      });
+    }
+  }; // Should show an error message if the product is not in the cart.
 
   // What is displayed.
   // Display the Shop component and the Cart component.
@@ -69,8 +88,15 @@ const App = () => {
         products={products}
         availableProducts={availableProducts}
         onAddToCart={onAddToCart}
+        onRmToCart={onRmToCart}
       />
-      <Cart products={products} inCartProducts={inCartProducts} />
+      <Cart
+        products={products}
+        inCartProducts={inCartProducts}
+        availableProducts={availableProducts}
+        onAddToCart={onAddToCart}
+        onRmToCart={onRmToCart}
+      />
     </div>
   );
 };

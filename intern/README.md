@@ -79,3 +79,10 @@ You are free to do whatever you want concerning the design of what you add but t
 You must submit the project as a private git repository (github.com, bitbucket.com, gitlab.com)or a zip file.
 
 Have fun :rocket: :wink:
+
+
+## My ideas
+
+- add categories for products
+- add a button to display the shopping cart (new page)
+- search bar

@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./index.css";
 
 const Cart = (props) => {
   return (
@@ -9,20 +10,40 @@ const Cart = (props) => {
           <tr>
             <th scope="col">Item</th>
             <th scope="col">Quantity</th>
+            <th scope="col">Available</th>
             <th scope="col">Price</th>
           </tr>
         </thead>
         <tbody>
           {props.products.map((product) => (
+            props.inCartProducts[product.id] > 0 &&
             <tr key={product.id}>
               <td>{product.name}</td>
-              <td>{props.inCartProducts[product.id]}</td>
+              <td className="line">
+                <button
+                  onClick={() => props.onRmToCart(product.id)}
+                  className="btn btn-tertiary red-btn"
+                >
+                  -
+                </button>
+                {props.inCartProducts[product.id]}
+                <button
+                  onClick={() => props.onAddToCart(product.id)}
+                  className="btn btn-tertiary green-btn"
+                >
+                  +
+                </button>
+              </td>
+              <td>{props.availableProducts[product.id]}</td>
               <td>{product.price}$</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <span className="mx-auto">Total: {}$</span>
+      <span className="mx-auto">Total:
+        {props.products.map((product) => (
+          props.inCartProducts[product.id] * product.price)).reduce((a, b) => (a + b), 0
+          )}$ </span>
     </div>
   );
 };

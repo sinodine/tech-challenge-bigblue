@@ -1,0 +1,32 @@
+.red-btn {
+    color: #f0644b;
+    border-width: 0px;
+    border-radius: 100%;
+    font-weight: bold;
+}
+
+.green-btn {
+    color: #17c554;
+    border-width: 0px;
+    border-radius: 100%;
+    font-weight: bold;
+    /* color: white; */
+    /* Add this line to change the text color to white */
+}
+
+.table td,
+.table th {
+    align-items: center;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+
+
+.line {
+    /* display: flex; */
+    gap: 20px;
+}
+
+td {
+    vertical-align: middle;
+}
